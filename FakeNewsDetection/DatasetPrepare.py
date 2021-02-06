@@ -33,19 +33,18 @@ train, test = TabularDataset.splits(path=Parameters.SOURCE_FOLDER,
                                     fields=fields,
                                     skip_header=True)
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-print(f'running on {device}')
+print(f'running on {Parameters.DEVICE}')
 
 train_iter = BucketIterator(train,
                             batch_size=Parameters.BATCH_SIZE,
                             sort_key=lambda x: len(x.text),
-                            device=device,
+                            device=Parameters.DEVICE,
                             train=True,
                             sort=True,
                             sort_within_batch=True)
 test_iter = Iterator(test,
                      batch_size=Parameters.BATCH_SIZE,
-                     device=device,
+                     device=Parameters.DEVICE,
                      train=False,
                      shuffle=False,
                      sort=False)
