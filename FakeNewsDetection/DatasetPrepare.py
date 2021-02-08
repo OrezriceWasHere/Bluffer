@@ -4,16 +4,16 @@ import torch
 import Parameters
 
 # Use BERT tokenizer (the method to use words the same way they are used in BERT model)
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+tokenizer = BertTokenizer.from_pretrained(Parameters.BERT_TOKENIZER_NAME)
 
 # Define padding token and unknown word token
 PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
 UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
 
-label_field = Field(sequential=False,
-                    use_vocab=False,
-                    batch_first=True,
-                    dtype=torch.float)
+int_field = Field(sequential=False,
+                  use_vocab=False,
+                  batch_first=True,
+                  dtype=torch.int)
 
 text_field = Field(use_vocab=False,
                    tokenize=tokenizer.encode,
@@ -23,8 +23,8 @@ text_field = Field(use_vocab=False,
                    fix_length=Parameters.MAX_SEQ_LEN,
                    pad_token=PAD_INDEX,
                    unk_token=UNK_INDEX)
-
-fields = [('label', label_field), ('title', text_field), ('text', text_field)]
+# id,title,author,text,label
+fields = [('id', int_field), ('title', text_field), ('author', text_field), ('text', text_field), ('label', int_field)]
 
 train, test = TabularDataset.splits(path=Parameters.SOURCE_FOLDER,
                                     train=Parameters.TRAIN_FILE_NAME,

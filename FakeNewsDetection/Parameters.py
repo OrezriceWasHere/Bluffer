@@ -1,18 +1,20 @@
 import os
 import torch
 
-
 # Data parameters:
 SOURCE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Data")
+OUTPUT_FOLDER = os.path.join(SOURCE_FOLDER, "Output")
 SOURCE_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset2")
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
 SUBMIT_FILE_NAME = "submit.csv"
 DATASET_FORMAT = "CSV"
+MODEL_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, "model.pt")
+METRICS_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, "metrics.pt")
 
 # Model Parameters:
 BERT_TOKENIZER_NAME = "bert-base-uncased"
-BATCH_SIZE = 16
+BATCH_SIZE = 1
 
 # Read only first 128 tokens
 MAX_SEQ_LEN = 128
