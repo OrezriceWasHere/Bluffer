@@ -31,7 +31,7 @@ train = TabularDataset(path=Parameters.SOURCE_FOLDER + "/" + Parameters.TRAIN_FI
                        fields=fields,
                        skip_header=True)
 
-test = TabularDataset.splits(path=Parameters.SOURCE_FOLDER + "/" + Parameters.TEST_FILE_NAME,
+test = TabularDataset(path=Parameters.SOURCE_FOLDER + "/" + Parameters.TEST_FILE_NAME,
                              format=Parameters.DATASET_FORMAT,
                              fields=fields,
                              skip_header=True)
