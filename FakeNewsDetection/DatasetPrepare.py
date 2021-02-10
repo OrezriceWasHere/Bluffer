@@ -20,11 +20,11 @@ text_field = Field(use_vocab=False,
                    lower=False,
                    include_lengths=False,
                    batch_first=True,
-                   fix_length=Parameters.MAX_SEQ_LEN,
+                   fix_length=64,
                    pad_token=PAD_INDEX,
                    unk_token=UNK_INDEX)
 # id,title,author,text,label
-fields = [('id', int_field), ('title', text_field), ('author', text_field), ('text', text_field), ('label', int_field)]
+fields = [('id', int_field), ('title', None), ('author', None), ('text', text_field), ('label', int_field)]
 
 train = TabularDataset(path=Parameters.SOURCE_FOLDER + "/" + Parameters.TRAIN_FILE_NAME,
                        format=Parameters.DATASET_FORMAT,
