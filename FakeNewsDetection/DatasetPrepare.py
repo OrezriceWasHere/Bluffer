@@ -26,12 +26,15 @@ text_field = Field(use_vocab=False,
 # id,title,author,text,label
 fields = [('id', int_field), ('title', text_field), ('author', text_field), ('text', text_field), ('label', int_field)]
 
-train, test = TabularDataset.splits(path=Parameters.SOURCE_FOLDER,
-                                    train=Parameters.TRAIN_FILE_NAME,
-                                    test=Parameters.TEST_FILE_NAME,
-                                    format=Parameters.DATASET_FORMAT,
-                                    fields=fields,
-                                    skip_header=True)
+train = TabularDataset(path=Parameters.SOURCE_FOLDER + "/" + Parameters.TRAIN_FILE_NAME,
+                       format=Parameters.DATASET_FORMAT,
+                       fields=fields,
+                       skip_header=True)
+
+test = TabularDataset.splits(path=Parameters.SOURCE_FOLDER + "/" + Parameters.TEST_FILE_NAME,
+                             format=Parameters.DATASET_FORMAT,
+                             fields=fields,
+                             skip_header=True)
 
 print(f'running on {Parameters.DEVICE}')
 
