@@ -31,10 +31,10 @@ def train(model,
     for epoch in range(num_epochs):
         # id,title,author,text,label
 
-        for (text_id, title, author, text, labels), _ in train_loader:
+        for (text_id, title, labels), _ in train_loader:
             labels = labels.type(torch.LongTensor)
             labels = labels.to(Parameters.DEVICE)
-            output = model(text, labels)
+            output = model(title, labels)
             loss, _ = output
 
             optimizer.zero_grad()
@@ -52,10 +52,10 @@ def train(model,
 
                     # validation loop
                     # id,title,author,text,label
-                    for (id_test, title_test, author_test, text_test, labels_test), _ in test_loader:
+                    for (id_test, title_test, labels_test), _ in test_loader:
                         labels_test = labels_test.type(torch.LongTensor)
                         labels_test = labels_test.to(Parameters.DEVICE)
-                        output = model(text_test, labels_test)
+                        output = model(title_test, labels_test)
                         loss, _ = output
 
                         valid_running_loss += loss.item()

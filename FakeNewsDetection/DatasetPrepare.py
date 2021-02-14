@@ -24,7 +24,7 @@ text_field = Field(use_vocab=False,
                    pad_token=PAD_INDEX,
                    unk_token=UNK_INDEX)
 # id,title,author,text,label
-fields = [('id', int_field), ('title', None), ('author', None), ('text', text_field), ('label', int_field)]
+fields = [('id', int_field), ('title', text_field), ('author', None), ('label', int_field)]
 
 train = TabularDataset(path=Parameters.SOURCE_FOLDER + "/" + Parameters.TRAIN_FILE_NAME,
                        format=Parameters.DATASET_FORMAT,
@@ -40,7 +40,7 @@ print(f'running on {Parameters.DEVICE}')
 
 train_iter = BucketIterator(train,
                             batch_size=Parameters.BATCH_SIZE,
-                            sort_key=lambda x: len(x.text),
+                            sort_key=lambda x: len(x.title),
                             device=Parameters.DEVICE,
                             train=True,
                             sort=True,
