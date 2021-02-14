@@ -5,7 +5,7 @@ import torch
 
 
 # Training Function
-from FakeNewsDetection.SaveLoad import save_checkpoint, save_metrics
+from SaveLoad import save_checkpoint, save_metrics
 
 
 def train(model,

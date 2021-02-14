@@ -1,9 +1,11 @@
 import os
 import torch
+from pathlib import Path
 
 # Data parameters:
 SOURCE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Data")
-OUTPUT_FOLDER = os.path.join(SOURCE_FOLDER, "Output")
+OUTPUT_FOLDER = os.path.join(SOURCE_FOLDER, "Data/Output")
+Path(OUTPUT_FOLDER).mkdir(parents=True, exist_ok=True)
 SOURCE_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset2")
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"

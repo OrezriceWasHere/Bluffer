@@ -1,6 +1,6 @@
 from BERT import BERT
 import Parameters
-from FakeNewsDetection.Train import train
+from Train import train
 import torch.optim as optim
 
 model = BERT()
