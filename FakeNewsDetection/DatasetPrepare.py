@@ -24,13 +24,20 @@ text_field = Field(use_vocab=False,
                    pad_token=PAD_INDEX,
                    unk_token=UNK_INDEX)
 # id,title,author,text,label
-fields = [('id', int_field), ('title', text_field), ('author', None), ('label', int_field)]
+fields = [('id', int_field), ('title', text_field), ('label', int_field)]
 
 train, test = TabularDataset(path=Parameters.SOURCE_2_FOLDER + "/" + Parameters.SOURCE_2_FILE,
                        format=Parameters.DATASET_FORMAT,
                        fields=fields,
                        skip_header=True).split()
 
+train_iter = BucketIterator(train,
+                            batch_size=Parameters.BATCH_SIZE,
+                            sort_key=lambda x: len(x.title),
+                            device=Parameters.DEVICE,
+                            train=True,
+                            sort=True,
+                            sort_within_batch=True)
 test_iter = Iterator(test,
                      batch_size=Parameters.BATCH_SIZE,
                      device=Parameters.DEVICE,
