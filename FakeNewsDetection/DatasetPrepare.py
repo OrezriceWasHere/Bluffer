@@ -26,12 +26,12 @@ text_field = Field(use_vocab=False,
 # id,title,author,text,label
 fields = [('id', int_field), ('title', text_field), ('author', None), ('label', int_field)]
 
-train = TabularDataset(path=Parameters.SOURCE_FOLDER + "/" + Parameters.TRAIN_FILE_NAME,
+train = TabularDataset(path=Parameters.SOURCE_2_FOLDER + "/" + Parameters.TRAIN_FILE_NAME,
                        format=Parameters.DATASET_FORMAT,
                        fields=fields,
                        skip_header=True)
 
-test = TabularDataset(path=Parameters.SOURCE_FOLDER + "/" + Parameters.TEST_FILE_NAME,
+test = TabularDataset(path=Parameters.SOURCE_2_FOLDER + "/" + Parameters.TEST_FILE_NAME,
                       format=Parameters.DATASET_FORMAT,
                       fields=fields,
                       skip_header=True)

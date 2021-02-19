@@ -14,10 +14,12 @@ TEST_FILE_NAME = "test.csv"
 SUBMIT_FILE_NAME = "submit.csv"
 DATASET_FORMAT = "CSV"
 SOURCE_2_FILE = "news2.csv"
+MODEL_FILE_NAME = "model.pt"
+METRICS_FILE_NAME = "metrics.pt"
 
 OUTPUT_FOLDER = os.path.join(SOURCE_2_FOLDER, "Output")
-MODEL_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, "model.pt")
-METRICS_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, "metrics.pt")
+MODEL_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, MODEL_FILE_NAME)
+METRICS_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, METRICS_FILE_NAME)
 Path(OUTPUT_FOLDER).mkdir(parents=True, exist_ok=True)
 
 # Model Parameters:

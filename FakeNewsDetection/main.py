@@ -21,6 +21,6 @@ def display_result(model):
 
 model = BERT()
 model = model.to(Parameters.DEVICE)
-load_checkpoint(Parameters.OUTPUT_1_FOLDER, model)
+load_checkpoint(Parameters.OUTPUT_1_FOLDER + "/" + Parameters.MODEL_FILE_NAME, model)
 train_model(model)
 display_result(model)
