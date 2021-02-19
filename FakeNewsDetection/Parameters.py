@@ -4,17 +4,21 @@ from pathlib import Path
 
 # Data parameters:
 SOURCE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Data")
-OUTPUT_FOLDER = os.path.join(SOURCE_FOLDER, "Output")
-Path(OUTPUT_FOLDER).mkdir(parents=True, exist_ok=True)
-SOURCE_2_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset1")
-SOURCE_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset2")
+SOURCE_1_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset1")
+SOURCE_2_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset2")
+OUTPUT_1_FOLDER = os.path.join(SOURCE_1_FOLDER, "Output")
+OUTPUT_2_FOLDER = os.path.join(SOURCE_2_FOLDER, "Output")
+SOURCE_FOLDER = SOURCE_1_FOLDER
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
 SUBMIT_FILE_NAME = "submit.csv"
 DATASET_FORMAT = "CSV"
+SOURCE_2_FILE = "news2.csv"
+
+OUTPUT_FOLDER = os.path.join(SOURCE_2_FOLDER, "Output")
 MODEL_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, "model.pt")
 METRICS_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, "metrics.pt")
-SOURCE_2_FILE = "news2.csv"
+Path(OUTPUT_FOLDER).mkdir(parents=True, exist_ok=True)
 
 # Model Parameters:
 BERT_TOKENIZER_NAME = "bert-base-uncased"
