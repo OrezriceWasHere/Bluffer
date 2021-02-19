@@ -10,7 +10,7 @@ import torch.optim as optim
 def train_model():
     model = BERT()
     model = model.to(Parameters.DEVICE)
-    optimizer = optim.Adam(model.parameters(), lr=8e-5)
+    optimizer = optim.Adam(model.parameters(), lr=2e-5)
 
     train(model=model, optimizer=optimizer, num_epochs=10)
     print("done")
