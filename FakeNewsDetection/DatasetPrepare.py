@@ -27,7 +27,7 @@ text_field = Field(use_vocab=False,
 #theme, label, id, tweet_text, tweet_author,
 fields = [('theme', None), ('label', int_field), ('id', None), ('tweet_text', text_field), ('tweet_author', None)]
 
-train, test = TabularDataset(path=Parameters.SOURCE_3_FOLDER + "/" + Parameters.TRAIN_FILE_NAME,
+train, test = TabularDataset(path=Parameters.SOURCE_3_FOLDER + "/" + Parameters.TWEETS_FILE_NAME,
                              format=Parameters.DATASET_FORMAT,
                              fields=fields,
                              shuffle=True,

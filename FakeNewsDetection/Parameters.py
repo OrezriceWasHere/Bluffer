@@ -34,7 +34,3 @@ MAX_SEQ_LEN = 128
 # Running environment Parameters
 DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 print(f'Running over {DEVICE}')
-
-
-
-
