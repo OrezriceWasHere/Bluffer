@@ -23,26 +23,23 @@ text_field = Field(use_vocab=False,
                    fix_length=64,
                    pad_token=PAD_INDEX,
                    unk_token=UNK_INDEX)
-# id,title,author,text,label
-fields = [('id', int_field), ('title', text_field), ('author', None), ('label', int_field)]
 
-train = TabularDataset(path=Parameters.SOURCE_2_FOLDER + "/" + Parameters.TRAIN_FILE_NAME,
-                       format=Parameters.DATASET_FORMAT,
-                       fields=fields,
-                       skip_header=True)
+#theme, label, id, tweet_text, tweet_author,
+fields = [('theme', None), ('label', int_field), ('id', None), ('tweet_text', text_field), ('tweet_author', None)]
 
-test = TabularDataset(path=Parameters.SOURCE_2_FOLDER + "/" + Parameters.TEST_FILE_NAME,
-                      format=Parameters.DATASET_FORMAT,
-                      fields=fields,
-                      skip_header=True)
+train, test = TabularDataset(path=Parameters.SOURCE_3_FOLDER + "/" + Parameters.TRAIN_FILE_NAME,
+                             format=Parameters.DATASET_FORMAT,
+                             fields=fields,
+                             shuffle=True,
+                             skip_header=True).split()
+
 
 train_iter = BucketIterator(train,
                             batch_size=Parameters.BATCH_SIZE,
-                            sort_key=lambda x: len(x.title),
                             device=Parameters.DEVICE,
                             train=True,
-                            sort=True,
-                            sort_within_batch=True)
+                            shuffle=True)
+
 test_iter = Iterator(test,
                      batch_size=Parameters.BATCH_SIZE,
                      device=Parameters.DEVICE,

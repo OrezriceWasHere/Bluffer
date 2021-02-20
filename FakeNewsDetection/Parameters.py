@@ -6,12 +6,14 @@ from pathlib import Path
 SOURCE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Data")
 SOURCE_1_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset1")
 SOURCE_2_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset2")
+SOURCE_3_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset3")
 OUTPUT_1_FOLDER = os.path.join(SOURCE_1_FOLDER, "Output")
 OUTPUT_2_FOLDER = os.path.join(SOURCE_2_FOLDER, "Output")
 SOURCE_FOLDER = SOURCE_1_FOLDER
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
 SUBMIT_FILE_NAME = "submit.csv"
+TWEETS_FILE_NAME = "tweets.csv"
 DATASET_FORMAT = "CSV"
 SOURCE_2_FILE = "news2.csv"
 MODEL_FILE_NAME = "model.pt"
