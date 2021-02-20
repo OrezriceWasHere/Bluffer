@@ -9,12 +9,12 @@ import torch.optim as optim
 
 def train_model(model):
     optimizer = optim.Adam(model.parameters(), lr=3e-5)
-    train(model=model, optimizer=optimizer, num_epochs=10)
+    train(model=model, optimizer=optimizer, num_epochs=30, eval_every=len(train_iter) // 4)
     print("done")
 
 
 def display_result(model):
-    load_checkpoint(Parameters.MODEL_OUTPUT_FILE, model)
+    # load_checkpoint(Parameters.MODEL_OUTPUT_FILE, model)
     display_loss_graph(Parameters.METRICS_OUTPUT_FILE)
     evaluate(model, train_iter)
 
