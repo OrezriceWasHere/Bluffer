@@ -15,6 +15,11 @@ int_field = Field(sequential=False,
                   batch_first=True,
                   dtype=torch.int)
 
+long_field = Field(sequential=False,
+                   use_vocab=False,
+                   batch_first=True,
+                   dtype=torch.long)
+
 text_field = Field(use_vocab=False,
                    tokenize=tokenizer.encode,
                    lower=False,
@@ -24,13 +29,12 @@ text_field = Field(use_vocab=False,
                    pad_token=PAD_INDEX,
                    unk_token=UNK_INDEX)
 
-#theme, label, id, tweet_text, tweet_author,
-fields = [('theme', None), ('label', int_field), ('id', None), ('tweet_text', text_field), ('tweet_author', None)]
+# label is required to be long field by Net
+fields = [('theme', None), ('label', long_field), ('id', None), ('tweet_text', text_field), ('tweet_author', None)]
 
 train, test = TabularDataset(path=Parameters.SOURCE_3_FOLDER + "/" + Parameters.TWEETS_FILE_NAME,
                              format=Parameters.DATASET_FORMAT,
                              fields=fields,
-                             shuffle=True,
                              skip_header=True).split()
 
 

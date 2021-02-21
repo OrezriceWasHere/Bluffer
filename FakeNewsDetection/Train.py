@@ -29,12 +29,12 @@ def train(model,
     # training loop
     model.train()
     for epoch in range(num_epochs):
-        # id,title,author,text,label
 
-        for (text_id, title, labels), _ in train_loader:
-            labels = labels.type(torch.LongTensor)
+        for (labels, tweet_text), nonefields in train_loader:
+            # labels = labels.type(torch.LongTensor)
             labels = labels.to(Parameters.DEVICE)
-            output = model(title, labels)
+            tweet_text = tweet_text.to(Parameters.DEVICE)
+            output = model(tweet_text, labels)
             loss, _ = output
 
             optimizer.zero_grad()
@@ -52,10 +52,11 @@ def train(model,
 
                     # validation loop
                     # id,title,author,text,label
-                    for (id_test, title_test, labels_test), _ in test_loader:
-                        labels_test = labels_test.type(torch.LongTensor)
+                    for (labels_test, tweet_text_test), _ in test_loader:
+                        # labels_test = labels_test.type(torch.LongTensor)
+                        tweet_text_test = tweet_text_test.to(Parameters.DEVICE)
                         labels_test = labels_test.to(Parameters.DEVICE)
-                        output = model(title_test, labels_test)
+                        output = model(tweet_text_test, labels_test)
                         loss, _ = output
 
                         valid_running_loss += loss.item()
