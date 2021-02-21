@@ -22,14 +22,10 @@ def evaluate(model, test_loader):
 
     model.eval()
     with torch.no_grad():
-        for (text_id, title, labels), _ in test_loader:
-
-            labels = labels.type(torch.LongTensor)
+        for (labels, tweet_text), _ in test_loader:
             labels = labels.to(Parameters.DEVICE)
-            title = title.type(torch.LongTensor)
-            title = title.to(Parameters.DEVICE)
-            output = model(title, labels)
-
+            tweet_text = title.to(Parameters.DEVICE)
+            output = model(tweet_text, labels)
             _, output = output
             y_pred.extend(torch.argmax(output, 1).tolist())
             y_true.extend(labels.tolist())
