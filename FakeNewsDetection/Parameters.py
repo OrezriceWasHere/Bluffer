@@ -9,6 +9,7 @@ SOURCE_2_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset2")
 SOURCE_3_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset3")
 OUTPUT_1_FOLDER = os.path.join(SOURCE_1_FOLDER, "Output")
 OUTPUT_2_FOLDER = os.path.join(SOURCE_2_FOLDER, "Output")
+OUTPUT_3_FOLDER = os.path.join(SOURCE_3_FOLDER, "Output")
 SOURCE_FOLDER = SOURCE_3_FOLDER
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
@@ -19,7 +20,7 @@ SOURCE_2_FILE = "news2.csv"
 MODEL_FILE_NAME = "model.pt"
 METRICS_FILE_NAME = "metrics.pt"
 
-OUTPUT_FOLDER = os.path.join(SOURCE_2_FOLDER, "Output")
+OUTPUT_FOLDER = OUTPUT_3_FOLDER
 MODEL_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, MODEL_FILE_NAME)
 METRICS_OUTPUT_FILE = os.path.join(OUTPUT_FOLDER, METRICS_FILE_NAME)
 Path(OUTPUT_FOLDER).mkdir(parents=True, exist_ok=True)

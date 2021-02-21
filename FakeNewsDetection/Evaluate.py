@@ -1,3 +1,4 @@
+
 import matplotlib.pyplot as plt
 from SaveLoad import load_metrics
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
@@ -6,17 +7,20 @@ import Parameters
 import seaborn as sns
 
 
-def display_loss_graph(metric_file_location):
+def display_loss_graph(metric_file_location, title=""):
     train_loss_list, valid_loss_list, global_steps_list = load_metrics(metric_file_location)
     plt.plot(global_steps_list, train_loss_list, label='Train')
     plt.plot(global_steps_list, valid_loss_list, label='Valid')
     plt.xlabel('Global Steps')
     plt.ylabel('Loss')
     plt.legend()
+    if len(title) > 0:
+        plt.title(title)
     plt.show()
 
 
-def evaluate(model, test_loader):
+
+def evaluate(model, test_loader, title=""):
     y_pred = []
     y_true = []
 
@@ -24,7 +28,7 @@ def evaluate(model, test_loader):
     with torch.no_grad():
         for (labels, tweet_text), _ in test_loader:
             labels = labels.to(Parameters.DEVICE)
-            tweet_text = title.to(Parameters.DEVICE)
+            tweet_text = tweet_text.to(Parameters.DEVICE)
             output = model(tweet_text, labels)
             _, output = output
             y_pred.extend(torch.argmax(output, 1).tolist())
@@ -37,10 +41,11 @@ def evaluate(model, test_loader):
     ax = plt.subplot()
     sns.heatmap(cm, annot=True, ax=ax, cmap='Blues', fmt="d")
 
-    ax.set_title('Confusion Matrix')
+    ax.set_title('Confusion Matrix ' + title)
 
     ax.set_xlabel('Predicted Labels')
     ax.set_ylabel('True Labels')
 
     ax.xaxis.set_ticklabels(['FAKE', 'REAL'])
     ax.yaxis.set_ticklabels(['FAKE', 'REAL'])
+    print(cm)
