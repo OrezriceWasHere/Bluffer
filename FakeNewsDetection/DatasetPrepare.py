@@ -30,19 +30,19 @@ text_field = Field(use_vocab=False,
                    unk_token=UNK_INDEX)
 
 # label is required to be long field by Net
-fields = [('theme', None), ('label', long_field), ('id', None), ('tweet_text', text_field), ('tweet_author', None)]
+fields = [('title', text_field), ('label', long_field)]
 
-train, test = TabularDataset(path=Parameters.SOURCE_3_FOLDER + "/" + Parameters.TWEETS_FILE_NAME,
-                             format=Parameters.DATASET_FORMAT,
-                             fields=fields,
-                             skip_header=True).split()
+test = TabularDataset(path=Parameters.SOURCE_4_FOLDER + "/" + "output.tsv",
+                      format=Parameters.DATASET_FORMAT,
+                      fields=fields,
+                      skip_header=True)
 
-
-train_iter = BucketIterator(train,
-                            batch_size=Parameters.BATCH_SIZE,
-                            device=Parameters.DEVICE,
-                            train=True,
-                            shuffle=True)
+#
+# train_iter = BucketIterator(train,
+#                             batch_size=Parameters.BATCH_SIZE,
+#                             device=Parameters.DEVICE,
+#                             train=True,
+#                             shuffle=True)
 
 test_iter = Iterator(test,
                      batch_size=Parameters.BATCH_SIZE,

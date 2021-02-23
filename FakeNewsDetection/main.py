@@ -1,7 +1,7 @@
 from BERT import BERT
 from SaveLoad import load_checkpoint
 from Evaluate import evaluate, display_loss_graph
-from DatasetPrepare import train_iter
+from DatasetPrepare import test_iter
 import Parameters
 from Train import train
 import torch.optim as optim
@@ -19,41 +19,42 @@ def display_result(model, metric_file_location,  title=""):
     evaluate(model, train_iter, title=title)
 
 
-# model = BERT()
-# model = model.to(Parameters.DEVICE)
-# load_checkpoint(Parameters.OUTPUT_3_FOLDER + "/" + Parameters.MODEL_FILE_NAME, model)
+model = BERT()
+model = model.to(Parameters.DEVICE)
+load_checkpoint(Parameters.OUTPUT_3_FOLDER + "/" + Parameters.MODEL_FILE_NAME, model)
+evaluate(model=model, test_loader=test_iter, title="Dataset 4 result")
 # # rain_model(model)
 # display_result(model)
 
-
-models = [
-    {
-        "title": "With Pre Trained Dataset",
-        "model_file_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
-                                            "with-pre-trained-model",
-                                            Parameters.MODEL_FILE_NAME),
-        "model_metric_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
-                                              "with-pre-trained-model",
-                                              Parameters.METRICS_FILE_NAME),
-        "model": BERT()
-    },
-    {
-        "title": "Without Pre Trained Dataset",
-        "model_file_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
-                                            "without-pre-trained-model",
-                                            Parameters.MODEL_FILE_NAME),
-        "model_metric_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
-                                              "without-pre-trained-model",
-                                              Parameters.METRICS_FILE_NAME),
-
-        "model": BERT()
-    }
-]
-
-for model in models:
-    print("Now working on model " + model["title"])
-    model["model"].to(Parameters.DEVICE)
-    load_checkpoint(model["model_file_location"], model["model"])
-    display_result(model=model["model"], metric_file_location=model["model_metric_location"], title=model["title"])
+#
+# models = [
+#     {
+#         "title": "With Pre Trained Dataset",
+#         "model_file_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
+#                                             "with-pre-trained-model",
+#                                             Parameters.MODEL_FILE_NAME),
+#         "model_metric_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
+#                                               "with-pre-trained-model",
+#                                               Parameters.METRICS_FILE_NAME),
+#         "model": BERT()
+#     },
+#     {
+#         "title": "Without Pre Trained Dataset",
+#         "model_file_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
+#                                             "without-pre-trained-model",
+#                                             Parameters.MODEL_FILE_NAME),
+#         "model_metric_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
+#                                               "without-pre-trained-model",
+#                                               Parameters.METRICS_FILE_NAME),
+#
+#         "model": BERT()
+#     }
+# ]
+#
+# for model in models:
+#     print("Now working on model " + model["title"])
+#     model["model"].to(Parameters.DEVICE)
+#     load_checkpoint(model["model_file_location"], model["model"])
+#     display_result(model=model["model"], metric_file_location=model["model_metric_location"], title=model["title"])
 
 
