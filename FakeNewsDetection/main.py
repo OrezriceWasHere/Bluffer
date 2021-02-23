@@ -14,8 +14,8 @@ def train_model(model):
     print("done")
 
 
-def display_result(model, title=""):
-    display_loss_graph(Parameters.METRICS_OUTPUT_FILE, title=title)
+def display_result(model, metric_file_location,  title=""):
+    display_loss_graph(metric_file_location, title=title)
     evaluate(model, train_iter, title=title)
 
 
@@ -29,19 +29,31 @@ def display_result(model, title=""):
 models = [
     {
         "title": "With Pre Trained Dataset",
-        "location": os.path.join(Parameters.OUTPUT_3_FOLDER, "with-pre-trained-model", Parameters.MODEL_FILE_NAME),
+        "model_file_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
+                                            "with-pre-trained-model",
+                                            Parameters.MODEL_FILE_NAME),
+        "model_metric_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
+                                              "with-pre-trained-model",
+                                              Parameters.METRICS_FILE_NAME),
         "model": BERT()
     },
     {
         "title": "Without Pre Trained Dataset",
-        "location": os.path.join(Parameters.OUTPUT_3_FOLDER, "without-pre-trained-model", Parameters.MODEL_FILE_NAME),
+        "model_file_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
+                                            "without-pre-trained-model",
+                                            Parameters.MODEL_FILE_NAME),
+        "model_metric_location": os.path.join(Parameters.OUTPUT_3_FOLDER,
+                                              "without-pre-trained-model",
+                                              Parameters.METRICS_FILE_NAME),
+
         "model": BERT()
     }
 ]
 
 for model in models:
+    print("Now working on model " + model["title"])
     model["model"].to(Parameters.DEVICE)
-    load_checkpoint(models["location"], model["model"])
-    display_result(model["model"], model["title"])
+    load_checkpoint(model["model_file_location"], model["model"])
+    display_result(model=model["model"], metric_file_location=model["model_metric_location"], title=model["title"])
 
 
