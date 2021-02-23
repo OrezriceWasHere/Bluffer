@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 
+
 path = os.path.dirname(os.path.abspath(__file__))
 folder_name = "News_dataset"
 fake_news_path = os.path.join(path, folder_name, "Fake.csv")
@@ -19,13 +20,13 @@ with open(output_file_name, "w") as output:
     output.write(header.replace("{","").replace("}", ""))
 
     for index, row in real_file.iterrows():
-        output.write(header.format(title=row[title_index], label="1"))
+        title = row[title_index]
+        if title is not None and title and not title.isspace():
+            output.write(header.format(title=row[title_index], label="1"))
 
     for index, row in fake_file.iterrows():
-        output.write(header.format(title=row[title_index], label="0"))
-
-
-
-
+        title = row[title_index]
+        if title is not None and not title.isspace():
+            output.write(header.format(title=row[title_index], label="0"))
 
 

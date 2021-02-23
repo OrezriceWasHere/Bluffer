@@ -25,7 +25,7 @@ text_field = Field(use_vocab=False,
                    lower=False,
                    include_lengths=False,
                    batch_first=True,
-                   fix_length=64,
+                   fix_length=Parameters.MAX_SEQ_LEN,
                    pad_token=PAD_INDEX,
                    unk_token=UNK_INDEX)
 
@@ -37,18 +37,18 @@ test = TabularDataset(path=Parameters.SOURCE_4_FOLDER + "/" + "output.tsv",
                       fields=fields,
                       skip_header=True)
 
-#
-# train_iter = BucketIterator(train,
-#                             batch_size=Parameters.BATCH_SIZE,
-#                             device=Parameters.DEVICE,
-#                             train=True,
-#                             shuffle=True)
 
-test_iter = Iterator(test,
-                     batch_size=Parameters.BATCH_SIZE,
-                     device=Parameters.DEVICE,
-                     train=False,
-                     shuffle=False,
-                     sort=False)
+train_iter = BucketIterator(test,
+                            batch_size=Parameters.BATCH_SIZE,
+                            device=Parameters.DEVICE,
+                            train=True,
+                            shuffle=True)
+
+# test_iter = BucketIterator(test,
+#                      batch_size=Parameters.BATCH_SIZE,
+#                      device=Parameters.DEVICE,
+#                      train=True,
+#                      shuffle=True,
+#                      sort=False)
 
 print("Finish dataset prepare")

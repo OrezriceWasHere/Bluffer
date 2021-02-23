@@ -1,28 +1,28 @@
 from BERT import BERT
 from SaveLoad import load_checkpoint
 from Evaluate import evaluate, display_loss_graph
-from DatasetPrepare import test_iter
+from DatasetPrepare import train_iter
 import Parameters
-from Train import train
+#from Train import train
 import torch.optim as optim
 import os
 
 
 def train_model(model):
     optimizer = optim.Adam(model.parameters(), lr=2e-5)
-    train(model=model, optimizer=optimizer, num_epochs=10, eval_every=len(train_iter) // 2)
+    # train(model=model, optimizer=optimizer, num_epochs=10, eval_every=len(train_iter) // 2)
     print("done")
 
 
 def display_result(model, metric_file_location,  title=""):
     display_loss_graph(metric_file_location, title=title)
-    evaluate(model, train_iter, title=title)
+    # evaluate(model, train_iter, title=title)
 
 
 model = BERT()
 model = model.to(Parameters.DEVICE)
 load_checkpoint(Parameters.OUTPUT_3_FOLDER + "/" + Parameters.MODEL_FILE_NAME, model)
-evaluate(model=model, test_loader=test_iter, title="Dataset 4 result")
+evaluate(model=model, test_loader=train_iter, title="Dataset 4 result")
 # # rain_model(model)
 # display_result(model)
 

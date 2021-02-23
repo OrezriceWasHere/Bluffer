@@ -26,10 +26,11 @@ def evaluate(model, test_loader, title=""):
 
     model.eval()
     with torch.no_grad():
-        for (labels, tweet_text), _ in test_loader:
+        for X in test_loader:
+            (title_text, labels), _ = X
             labels = labels.to(Parameters.DEVICE)
-            tweet_text = tweet_text.to(Parameters.DEVICE)
-            output = model(tweet_text, labels)
+            title_text = title_text.to(Parameters.DEVICE)
+            output = model(title_text, labels)
             _, output = output
             y_pred.extend(torch.argmax(output, 1).tolist())
             y_true.extend(labels.tolist())
