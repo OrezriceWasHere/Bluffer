@@ -2,15 +2,14 @@ from BERT import BERT
 from SaveLoad import load_checkpoint
 from Evaluate import evaluate, display_loss_graph
 from DatasetPrepare import train_iter
+from Train import train
 import Parameters
-#from Train import train
 import torch.optim as optim
-import os
 
 
 def train_model(model):
     optimizer = optim.Adam(model.parameters(), lr=2e-5)
-    # train(model=model, optimizer=optimizer, num_epochs=10, eval_every=len(train_iter) // 2)
+    train(model=model, optimizer=optimizer, num_epochs=10, eval_every=len(train_iter) // 2)
     print("done")
 
 

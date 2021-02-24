@@ -1,21 +1,17 @@
-import torch.nn as nn
-import DatasetPrepare
-import Parameters
+from Parameters import DEVICE
 import torch
-
-
 # Training Function
 from SaveLoad import save_checkpoint, save_metrics
 
 
 def train(model,
           optimizer,
-          criterion=nn.BCELoss(),
-          train_loader=DatasetPrepare.train_iter,
-          test_loader=DatasetPrepare.test_iter,
+          train_loader,
+          test_loader,
+          model_output_file,
+          metric_output_file,
           num_epochs=5,
-          eval_every=len(DatasetPrepare.train_iter) // 2,
-          file_path=Parameters.OUTPUT_FOLDER,
+          eval_every=500,
           best_test_loss=float("Inf")):
 
     # initialize running values
@@ -30,12 +26,12 @@ def train(model,
     model.train()
     for epoch in range(num_epochs):
 
-        for (labels, tweet_text), nonefields in train_loader:
+        for (text, labels), nonefields in train_loader:
             # labels = labels.type(torch.LongTensor)
-            labels = labels.to(Parameters.DEVICE)
-            tweet_text = tweet_text.to(Parameters.DEVICE)
-            output = model(tweet_text, labels)
-            loss, _ = output
+            labels = labels.to(DEVICE)
+            text = text.to(DEVICE)
+            output = model(text, labels)
+            loss, result = output
 
             optimizer.zero_grad()
             loss.backward()
@@ -52,10 +48,10 @@ def train(model,
 
                     # validation loop
                     # id,title,author,text,label
-                    for (labels_test, tweet_text_test), _ in test_loader:
+                    for (tweet_text_test, labels_test), _ in test_loader:
                         # labels_test = labels_test.type(torch.LongTensor)
-                        tweet_text_test = tweet_text_test.to(Parameters.DEVICE)
-                        labels_test = labels_test.to(Parameters.DEVICE)
+                        tweet_text_test = tweet_text_test.to(DEVICE)
+                        labels_test = labels_test.to(DEVICE)
                         output = model(tweet_text_test, labels_test)
                         loss, _ = output
 
@@ -81,8 +77,8 @@ def train(model,
                 # checkpoint
                 if best_test_loss > average_test_loss:
                     best_test_loss = average_test_loss
-                    save_checkpoint(Parameters.MODEL_OUTPUT_FILE, model, best_test_loss)
-                    save_metrics(Parameters.METRICS_OUTPUT_FILE, train_loss_list, test_loss_list, global_steps_list)
+                    save_checkpoint(model_output_file, model, best_test_loss)
+                    save_metrics(metric_output_file, train_loss_list, test_loss_list, global_steps_list)
 
-    save_metrics(Parameters.METRICS_OUTPUT_FILE, train_loss_list, test_loss_list, global_steps_list)
+    save_metrics(metric_output_file, train_loss_list, test_loss_list, global_steps_list)
     print('Finished Training!')

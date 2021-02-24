@@ -1,9 +1,8 @@
-
 import matplotlib.pyplot as plt
 from SaveLoad import load_metrics
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import torch
-import Parameters
+from Parameters import DEVICE
 import seaborn as sns
 
 
@@ -19,7 +18,6 @@ def display_loss_graph(metric_file_location, title=""):
     plt.show()
 
 
-
 def evaluate(model, test_loader, title=""):
     y_pred = []
     y_true = []
@@ -28,8 +26,8 @@ def evaluate(model, test_loader, title=""):
     with torch.no_grad():
         for X in test_loader:
             (title_text, labels), _ = X
-            labels = labels.to(Parameters.DEVICE)
-            title_text = title_text.to(Parameters.DEVICE)
+            labels = labels.to(DEVICE)
+            title_text = title_text.to(DEVICE)
             output = model(title_text, labels)
             _, output = output
             y_pred.extend(torch.argmax(output, 1).tolist())
