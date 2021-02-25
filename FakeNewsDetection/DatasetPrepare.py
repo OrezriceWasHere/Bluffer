@@ -36,13 +36,13 @@ fields = [('title', text_field), ('label', long_field)]
 #                       format=Parameters.DATASET_FORMAT,
 #                       fields=fields,
 #                       skip_header=True)
-
-
-train_iter = BucketIterator(test,
-                            batch_size=Parameters.BATCH_SIZE,
-                            device=Parameters.DEVICE,
-                            train=True,
-                            shuffle=True)
+#
+#
+# train_iter = BucketIterator(test,
+#                             batch_size=Parameters.BATCH_SIZE,
+#                             device=Parameters.DEVICE,
+#                             train=True,
+#                             shuffle=True)
 
 
 def create_iterators(data_file_location):

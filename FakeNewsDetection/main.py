@@ -1,11 +1,9 @@
 from BERT import BERT
-from SaveLoad import load_checkpoint
 from Evaluate import evaluate, display_loss_graph
-from DatasetPrepare import train_iter
 from Train import train
-from os.path import join
+from os.path import join,exists
 import Parameters
-
+from pathlib import Path
 import DatasetPrepare
 import torch.optim as optim
 
@@ -23,23 +21,19 @@ def display_result(model, metric_file_location, test_loader,  title=""):
 datasets = [
     {
         "data_file": join(Parameters.SOURCE_1_FOLDER, "news.tsv"),
-        "model_output_file": join(Parameters.SOURCE_1_FOLDER, "output", "model.pt"),
-        "metric_output_file": join(Parameters.SOURCE_1_FOLDER, "output", "metric.pt")
+        "output_dir": join(Parameters.SOURCE_1_FOLDER, "output")
     },
     {
         "data_file": join(Parameters.SOURCE_2_FOLDER, "news.tsv"),
-        "model_output_file": join(Parameters.SOURCE_2_FOLDER, "output", "model.pt"),
-        "metric_output_file": join(Parameters.SOURCE_2_FOLDER, "output", "metric.pt")
+        "output_dir": join(Parameters.SOURCE_2_FOLDER, "output")
     },
     {
         "data_file": join(Parameters.SOURCE_3_FOLDER, "news.tsv"),
-        "model_output_file": join(Parameters.SOURCE_3_FOLDER, "output", "model.pt"),
-        "metric_output_file": join(Parameters.SOURCE_3_FOLDER, "output", "metric.pt")
+        "output_dir": join(Parameters.SOURCE_3_FOLDER, "output")
     },
     {
         "data_file": join(Parameters.SOURCE_4_FOLDER, "output.tsv"),
-        "model_output_file": join(Parameters.SOURCE_4_FOLDER, "output", "model.pt"),
-        "metric_output_file": join(Parameters.SOURCE_4_FOLDER, "output", "metric.pt")
+        "output_dir": join(Parameters.SOURCE_4_FOLDER, "output")
     }
 ]
 
@@ -50,14 +44,24 @@ for index, dataset in enumerate(datasets):
     print('-------------------------------------')
     print(f'now working on dataset {index + 1}')
     train_iterator, test_iterator = DatasetPrepare.create_iterators(dataset["data_file"])
+    Path(dataset["output_dir"]).mkdir(parents=True, exist_ok=True)
+    model_output_file = join(dataset["output_dir"], "model.pt")
+    metric_output_file = join(dataset["output_dir"], "metric.pt")
+    if not exists(model_output_file):
+        with open(model_output_file, "w"):
+            pass
+    if not exists(metric_output_file):
+        with open(metric_output_file, "w"):
+            pass
     train(model=model,
           optimizer=optimizer,
           train_loader=train_iterator,
           test_loader=test_iterator,
-          model_output_file=dataset["model_output_file"],
-          metric_output_file=dataset["metric_output_file"])
+          eval_every=len(train_iterator) // 2,
+          model_output_file=model_output_file,
+          metric_output_file=metric_output_file)
     display_result(model=model,
-                   metric_file_location=dataset["metric_output_file"],
+                   metric_file_location=metric_output_file,
                    test_loader=test_iterator,
                    title=f'Result Dataset #{index + 1} and before')
     print(f'now finished working on dataset {index + 1}')
