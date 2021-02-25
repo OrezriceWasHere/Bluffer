@@ -31,11 +31,11 @@ text_field = Field(use_vocab=False,
 
 # label is required to be long field by Net
 fields = [('title', text_field), ('label', long_field)]
-
-test = TabularDataset(path=Parameters.SOURCE_4_FOLDER + "/" + "output.tsv",
-                      format=Parameters.DATASET_FORMAT,
-                      fields=fields,
-                      skip_header=True)
+#
+# test = TabularDataset(path=Parameters.SOURCE_4_FOLDER + "/" + "output.tsv",
+#                       format=Parameters.DATASET_FORMAT,
+#                       fields=fields,
+#                       skip_header=True)
 
 
 train_iter = BucketIterator(test,
@@ -44,11 +44,28 @@ train_iter = BucketIterator(test,
                             train=True,
                             shuffle=True)
 
-# test_iter = BucketIterator(test,
-#                      batch_size=Parameters.BATCH_SIZE,
-#                      device=Parameters.DEVICE,
-#                      train=True,
-#                      shuffle=True,
-#                      sort=False)
 
-print("Finish dataset prepare")
+def create_iterators(data_file_location):
+    train, test = TabularDataset(path=data_file_location,
+                                 format="TSV",
+                                 fields=fields,
+                                 skip_header=True).split()
+
+    train_iter = BucketIterator(train,
+                                batch_size=Parameters.BATCH_SIZE,
+                                device=Parameters.DEVICE,
+                                train=True,
+                                shuffle=True)
+
+    test_iter = BucketIterator(test,
+                               batch_size=Parameters.BATCH_SIZE,
+                               device=Parameters.DEVICE,
+                               train=True,
+                               shuffle=True,
+                               sort=False)
+    print("Finish dataset prepare")
+
+    return train_iter, test_iter
+
+
+

@@ -12,7 +12,6 @@ OUTPUT_1_FOLDER = os.path.join(SOURCE_1_FOLDER, "Output")
 OUTPUT_2_FOLDER = os.path.join(SOURCE_2_FOLDER, "Output")
 OUTPUT_3_FOLDER = os.path.join(SOURCE_3_FOLDER, "Output")
 OUTPUT_4_FOLDER = os.path.join(SOURCE_4_FOLDER, "Output")
-SOURCE_FOLDER = SOURCE_3_FOLDER
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
 SUBMIT_FILE_NAME = "submit.csv"
