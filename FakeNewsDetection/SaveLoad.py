@@ -33,7 +33,7 @@ def save_metrics(save_path, train_loss_list, valid_loss_list, global_steps_list)
                   'global_steps_list': global_steps_list}
 
     torch.save(state_dict, save_path)
-    print(f'Model saved to ==> {save_path}')
+    print(f'Metric saved to ==> {save_path}')
 
 
 def load_metrics(load_path):
@@ -41,6 +41,6 @@ def load_metrics(load_path):
         return
 
     state_dict = torch.load(load_path, map_location=Parameters.DEVICE)
-    print(f'Model loaded from <== {load_path}')
+    print(f'Metric loaded from <== {load_path}')
 
     return state_dict['train_loss_list'], state_dict['valid_loss_list'], state_dict['global_steps_list']
