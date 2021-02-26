@@ -53,15 +53,31 @@ for index, dataset in enumerate(datasets):
     if not exists(metric_output_file):
         with open(metric_output_file, "w"):
             pass
-    train(model=model,
-          optimizer=optimizer,
-          train_loader=train_iterator,
-          test_loader=test_iterator,
-          eval_every=len(train_iterator) // 2,
-          model_output_file=model_output_file,
-          metric_output_file=metric_output_file)
-    display_result(model=model,
-                   metric_file_location=metric_output_file,
-                   test_loader=test_iterator,
-                   title=f'Result Dataset #{index + 1} and before')
-    print(f'now finished working on dataset {index + 1}')
+
+    if index < len(datasets) - 1:
+        train(model=model,
+              optimizer=optimizer,
+              train_loader=train_iterator,
+              test_loader=test_iterator,
+              eval_every=len(train_iterator) // 2,
+              model_output_file=model_output_file,
+              metric_output_file=metric_output_file)
+    else:
+        evaluate(model,
+                 test_loader=train_iterator,
+                 title="Evaluating TRAIN values of dataset 4 when running all over datasets 1 - 3")
+        evaluate(model,
+                 test_loader=test_iterator,
+                 title="Evaluating TEST values of dataset 4 when running all over datasets 1 - 3")
+
+    # display_result(model=model,
+        #                metric_file_location=metric_output_file,
+        #                test_loader=test_iterator,
+        #                title=f'Result Dataset #{index + 1} and before')
+        # display_result(model=model,
+        #                metric_file_location=metric_output_file,
+        #                test_loader=test_iterator,
+        #                title=f'Result Dataset #{index + 1} and before')
+
+
+print(f'now finished working on dataset {index + 1}')
