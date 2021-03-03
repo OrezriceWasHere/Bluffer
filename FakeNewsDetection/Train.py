@@ -55,10 +55,9 @@ def train(model,
                         # labels_test = labels_test.type(torch.LongTensor)
                         tweet_text_test = tweet_text_test.to(DEVICE)
                         labels_test = labels_test.to(DEVICE)
+                        labels_test = labels_test.unsqueeze(1)
                         result = model(tweet_text_test, labels_test)
-                        labels = labels.unsqueeze(1)
-                        loss = criterion(result, labels)
-
+                        loss = criterion(result, labels_test)
                         valid_running_loss += loss.item()
 
                 # evaluation
