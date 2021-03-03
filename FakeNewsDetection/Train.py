@@ -1,5 +1,6 @@
 from Parameters import DEVICE
 import torch
+from torch import nn
 # Training Function
 from SaveLoad import save_checkpoint, save_metrics
 
@@ -10,6 +11,7 @@ def train(model,
           test_loader,
           model_output_file,
           metric_output_file,
+          criterion=nn.BCELoss(),
           num_epochs=5,
           eval_every=500,
           best_test_loss=float("Inf")):
@@ -30,8 +32,9 @@ def train(model,
             # labels = labels.type(torch.LongTensor)
             labels = labels.to(DEVICE)
             text = text.to(DEVICE)
-            output = model(text, labels)
-            loss, result = output
+            result = model(text)
+            labels = labels.unsqueeze(1)
+            loss = criterion(result, labels)
 
             optimizer.zero_grad()
             loss.backward()
@@ -52,8 +55,9 @@ def train(model,
                         # labels_test = labels_test.type(torch.LongTensor)
                         tweet_text_test = tweet_text_test.to(DEVICE)
                         labels_test = labels_test.to(DEVICE)
-                        output = model(tweet_text_test, labels_test)
-                        loss, _ = output
+                        result = model(tweet_text_test, labels_test)
+                        labels = labels.unsqueeze(1)
+                        loss = criterion(result, labels)
 
                         valid_running_loss += loss.item()
 

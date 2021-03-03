@@ -20,6 +20,11 @@ long_field = Field(sequential=False,
                    batch_first=True,
                    dtype=torch.long)
 
+float_field = Field(sequential=False,
+                    use_vocab=False,
+                    batch_first=True,
+                    dtype=torch.float)
+
 text_field = Field(use_vocab=False,
                    tokenize=tokenizer.encode,
                    lower=False,
@@ -30,7 +35,7 @@ text_field = Field(use_vocab=False,
                    unk_token=UNK_INDEX)
 
 # label is required to be long field by Net
-fields = [('title', text_field), ('label', long_field)]
+fields = [('title', text_field), ('label', float_field)]
 #
 # test = TabularDataset(path=Parameters.SOURCE_4_FOLDER + "/" + "output.tsv",
 #                       format=Parameters.DATASET_FORMAT,

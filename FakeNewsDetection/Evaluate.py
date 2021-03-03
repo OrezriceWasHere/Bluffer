@@ -24,13 +24,14 @@ def evaluate(model, test_loader, title=""):
 
     model.eval()
     with torch.no_grad():
-        for X in test_loader:
-            (title_text, labels), _ = X
+        for line in test_loader:
+            (title_text, labels), _ = line
             labels = labels.to(DEVICE)
             title_text = title_text.to(DEVICE)
             output = model(title_text, labels)
-            _, output = output
-            y_pred.extend(torch.argmax(output, 1).tolist())
+            labels = labels.unsqueeze(1)
+            result = output
+            y_pred.extend(torch.argmax(result, 1).tolist())
             y_true.extend(labels.tolist())
 
     print('Classification Report:')
