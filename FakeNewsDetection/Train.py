@@ -56,7 +56,7 @@ def train(model,
                         tweet_text_test = tweet_text_test.to(DEVICE)
                         labels_test = labels_test.to(DEVICE)
                         labels_test = labels_test.unsqueeze(1)
-                        result = model(tweet_text_test, labels_test)
+                        result = model(tweet_text_test)
                         loss = criterion(result, labels_test)
                         valid_running_loss += loss.item()
 
