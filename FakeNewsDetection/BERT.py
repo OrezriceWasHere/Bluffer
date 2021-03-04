@@ -16,6 +16,5 @@ class BERT(nn.Module):
 
     def forward(self, text):
         cls_hs = self.bert(text)[0]
-        x = torch.sigmoid(cls_hs)
-        return x
+        return cls_hs
 
