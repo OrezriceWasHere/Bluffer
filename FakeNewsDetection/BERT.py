@@ -12,9 +12,12 @@ class BERT(nn.Module):
             param.requires_grad = False
         self.bert.classifier = nn.Linear(in_features=768, out_features=2)
         self.bert.classifier.requires_grad = True
+        self.fc = nn.Linear(in_features=2, out_features=1)
+        self.fc.requires_grad = True
 
 
     def forward(self, text):
         cls_hs = self.bert(text)[0]
-        return cls_hs
-
+        x = torch.sigmoid(cls_hs)
+        x = self.fc(x)
+        return x

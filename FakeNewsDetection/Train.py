@@ -1,3 +1,4 @@
+from FakeNewsDetection import Parameters
 from Parameters import DEVICE
 import torch
 from torch import nn
@@ -11,7 +12,7 @@ def train(model,
           test_loader,
           model_output_file,
           metric_output_file,
-          criterion=nn.CrossEntropyLoss(),
+          criterion=nn.BCEWithLogitsLoss(),
           num_epochs=5,
           eval_every=500,
           best_test_loss=float("Inf")):
@@ -31,9 +32,10 @@ def train(model,
         for (text, labels), nonefields in train_loader:
             # labels = labels.type(torch.LongTensor)
             labels = labels.to(DEVICE)
-            text = text.to(DEVICE)
+            text = text.to(DEVICE).unsqueeze(1)
             result = model(text)
-            prediction = torch.argmax(result, 1)
+            prediction = (result > Parameters.THRESHOLD).float()
+            prediction.requires_grad = True
             loss = criterion(prediction, labels)
 
             optimizer.zero_grad()
@@ -52,9 +54,9 @@ def train(model,
                     # test loop
                     for (tweet_text_test, labels_test), _ in test_loader:
                         tweet_text_test = tweet_text_test.to(DEVICE)
-                        labels_test = labels_test.to(DEVICE)
+                        labels_test = labels_test.to(DEVICE).unsqueeze(1)
                         result = model(tweet_text_test)
-                        prediction = torch.argmax(result, 1).float()
+                        prediction = (result > Parameters.THRESHOLD).float()
                         loss = criterion(prediction, labels_test)
                         test_running_loss += loss.item()
 
