@@ -29,10 +29,10 @@ def evaluate(model, test_loader, title="", criterion=nn.BCELoss()):
     with torch.no_grad():
         for line in test_loader:
             (title_text, labels), _ = line
-            labels = labels.to(DEVICE).unsqueeze(1)
+            labels = labels.to(DEVICE)
             title_text = title_text.to(DEVICE)
             result = model(title_text)
-            prediction = (result > Parameters.THRESHOLD).float()
+            prediction = torch.argmax(result, 1).long()
             y_pred.extend(prediction.tolist())
             y_true.extend(labels.tolist())
 

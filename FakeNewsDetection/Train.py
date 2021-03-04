@@ -12,7 +12,7 @@ def train(model,
           test_loader,
           model_output_file,
           metric_output_file,
-          criterion=nn.BCEWithLogitsLoss(),
+          criterion=nn.CrossEntropyLoss(),
           num_epochs=5,
           eval_every=500,
           best_test_loss=float("Inf")):
@@ -31,12 +31,10 @@ def train(model,
 
         for (text, labels), nonefields in train_loader:
             # labels = labels.type(torch.LongTensor)
-            labels = labels.to(DEVICE).unsqueeze(1)
+            labels = labels.to(DEVICE)
             text = text.to(DEVICE)
             result = model(text)
-            prediction = (result > Parameters.THRESHOLD).float()
-            prediction.requires_grad = True
-            loss = criterion(prediction, labels)
+            loss = criterion(result, labels)
 
             optimizer.zero_grad()
             loss.backward()
@@ -54,10 +52,9 @@ def train(model,
                     # test loop
                     for (tweet_text_test, labels_test), _ in test_loader:
                         tweet_text_test = tweet_text_test.to(DEVICE)
-                        labels_test = labels_test.to(DEVICE).unsqueeze(1)
+                        labels_test = labels_test.to(DEVICE)
                         result = model(tweet_text_test)
-                        prediction = (result > Parameters.THRESHOLD).float()
-                        loss = criterion(prediction, labels_test)
+                        loss = criterion(result, labels_test)
                         test_running_loss += loss.item()
 
                 # evaluation
