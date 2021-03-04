@@ -31,8 +31,8 @@ def train(model,
 
         for (text, labels), nonefields in train_loader:
             # labels = labels.type(torch.LongTensor)
-            labels = labels.to(DEVICE)
-            text = text.to(DEVICE).unsqueeze(1)
+            labels = labels.to(DEVICE).unsqueeze(1)
+            text = text.to(DEVICE)
             result = model(text)
             prediction = (result > Parameters.THRESHOLD).float()
             prediction.requires_grad = True

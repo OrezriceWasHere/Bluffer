@@ -15,7 +15,6 @@ class BERT(nn.Module):
         self.fc = nn.Linear(in_features=2, out_features=1)
         self.fc.requires_grad = True
 
-
     def forward(self, text):
         cls_hs = self.bert(text)[0]
         x = torch.sigmoid(cls_hs)
