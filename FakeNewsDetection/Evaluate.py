@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from SaveLoad import load_metrics
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import torch
+import torch.nn as nn
 from Parameters import DEVICE
 import seaborn as sns
 
@@ -18,7 +19,7 @@ def display_loss_graph(metric_file_location, title=""):
     plt.show()
 
 
-def evaluate(model, test_loader, title=""):
+def evaluate(model, test_loader, title="", criterion=nn.BCELoss()):
     y_pred = []
     y_true = []
 
@@ -28,10 +29,9 @@ def evaluate(model, test_loader, title=""):
             (title_text, labels), _ = line
             labels = labels.to(DEVICE)
             title_text = title_text.to(DEVICE)
-            output = model(title_text, labels)
-            labels = labels.unsqueeze(1)
-            result = output
-            y_pred.extend(torch.argmax(result, 1).tolist())
+            result = model(title_text)
+            prediction = torch.argmax(result, 1).float()
+            y_pred.extend(prediction.tolist())
             y_true.extend(labels.tolist())
 
     print('Classification Report:')

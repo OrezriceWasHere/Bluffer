@@ -33,8 +33,9 @@ def train(model,
             labels = labels.to(DEVICE)
             text = text.to(DEVICE)
             result = model(text)
-            labels = labels.unsqueeze(1)
-            loss = criterion(result, labels)
+            prediction = torch.argmax(result, 1).float()
+            loss = criterion(prediction, labels)
+            loss.requires_grad = True
 
             optimizer.zero_grad()
             loss.backward()
@@ -50,14 +51,12 @@ def train(model,
                 with torch.no_grad():
 
                     # test loop
-                    # id,title,author,text,label
                     for (tweet_text_test, labels_test), _ in test_loader:
-                        # labels_test = labels_test.type(torch.LongTensor)
                         tweet_text_test = tweet_text_test.to(DEVICE)
                         labels_test = labels_test.to(DEVICE)
-                        labels_test = labels_test.unsqueeze(1)
                         result = model(tweet_text_test)
-                        loss = criterion(result, labels_test)
+                        prediction = torch.argmax(result, 1).float()
+                        loss = criterion(prediction, labels_test)
                         test_running_loss += loss.item()
 
                 # evaluation

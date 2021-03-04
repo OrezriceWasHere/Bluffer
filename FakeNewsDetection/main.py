@@ -61,7 +61,8 @@ for index, dataset in enumerate(datasets):
               test_loader=test_iterator,
               eval_every=len(train_iterator) // 2,
               model_output_file=model_output_file,
-              metric_output_file=metric_output_file)
+              metric_output_file=metric_output_file,
+          num_epochs=1)
     # else:
     #     evaluate(model,
     #              test_loader=train_iterator,
