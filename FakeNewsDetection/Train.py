@@ -1,4 +1,4 @@
-from FakeNewsDetection import Parameters
+import Parameters
 from Parameters import DEVICE
 import torch
 from torch import nn
