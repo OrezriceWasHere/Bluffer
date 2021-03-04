@@ -11,7 +11,7 @@ def train(model,
           test_loader,
           model_output_file,
           metric_output_file,
-          criterion=nn.BCELoss(),
+          criterion=nn.CrossEntropyLoss(),
           num_epochs=5,
           eval_every=500,
           best_test_loss=float("Inf")):
@@ -33,8 +33,7 @@ def train(model,
             labels = labels.to(DEVICE)
             text = text.to(DEVICE)
             result = model(text)
-            prediction = torch.argmax(result, 1).float()
-            prediction.requires_grad = True
+            prediction = torch.argmax(result, 1)
             loss = criterion(prediction, labels)
 
             optimizer.zero_grad()
