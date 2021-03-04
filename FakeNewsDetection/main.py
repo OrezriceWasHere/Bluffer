@@ -54,19 +54,19 @@ for index, dataset in enumerate(datasets):
         with open(metric_output_file, "w"):
             pass
 
-    if index < len(datasets) - 1:
-        train(model=model,
+    # if index < len(datasets) - 1:
+    train(model=model,
               optimizer=optimizer,
               train_loader=train_iterator,
               test_loader=test_iterator,
               eval_every=len(train_iterator) // 2,
               model_output_file=model_output_file,
               metric_output_file=metric_output_file)
-    else:
-        evaluate(model,
-                 test_loader=train_iterator,
-                 title="Evaluating TRAIN values of dataset 4 when running all over datasets 1 - 3")
-        evaluate(model,
+    # else:
+    #     evaluate(model,
+    #              test_loader=train_iterator,
+    #              title="Evaluating TRAIN values of dataset 4 when running all over datasets 1 - 3")
+    evaluate(model,
                  test_loader=test_iterator,
                  title="Evaluating TEST values of dataset 4 when running all over datasets 1 - 3")
 
