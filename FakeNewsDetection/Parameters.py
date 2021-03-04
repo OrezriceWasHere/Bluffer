@@ -29,7 +29,7 @@ Path(OUTPUT_FOLDER).mkdir(parents=True, exist_ok=True)
 # Model Parameters:
 BERT_TOKENIZER_NAME = "bert-base-uncased"
 BATCH_SIZE = 16
-LR = 1e-4
+LR = 1e-3
 
 # Read only first 128 tokens
 MAX_SEQ_LEN = 128
