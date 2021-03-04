@@ -39,7 +39,7 @@ datasets = [
 
 model = BERT()
 model = model.to(Parameters.DEVICE)
-optimizer = optim.Adam(model.parameters(), lr=2e-5)
+optimizer = optim.Adam(model.parameters(), lr=Parameters.LR)
 for index, dataset in enumerate(datasets):
     print('-------------------------------------')
     print(f'now working on dataset {index + 1}')
