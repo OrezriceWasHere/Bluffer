@@ -34,8 +34,8 @@ def train(model,
             text = text.to(DEVICE)
             result = model(text)
             prediction = torch.argmax(result, 1).float()
+            prediction.requires_grad = True
             loss = criterion(prediction, labels)
-            loss.requires_grad = True
 
             optimizer.zero_grad()
             loss.backward()
