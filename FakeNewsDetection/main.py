@@ -56,13 +56,13 @@ for index, dataset in enumerate(datasets):
 
     # if index < len(datasets) - 1:
     train(model=model,
-              optimizer=optimizer,
-              train_loader=train_iterator,
-              test_loader=test_iterator,
-              eval_every=len(train_iterator) // 2,
-              model_output_file=model_output_file,
-              metric_output_file=metric_output_file,
-          num_epochs=1)
+          optimizer=optimizer,
+          train_loader=train_iterator,
+          test_loader=test_iterator,
+          eval_every=len(train_iterator) // 2,
+          model_output_file=model_output_file,
+          metric_output_file=metric_output_file,
+          num_epochs=10)
     # else:
     #     evaluate(model,
     #              test_loader=train_iterator,
