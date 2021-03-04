@@ -7,9 +7,9 @@ import seaborn as sns
 
 
 def display_loss_graph(metric_file_location, title=""):
-    train_loss_list, valid_loss_list, global_steps_list = load_metrics(metric_file_location)
+    train_loss_list, test_loss_list, global_steps_list = load_metrics(metric_file_location)
     plt.plot(global_steps_list, train_loss_list, label='Train')
-    plt.plot(global_steps_list, valid_loss_list, label='Valid')
+    plt.plot(global_steps_list, test_loss_list, label='Test')
     plt.xlabel('Global Steps')
     plt.ylabel('Loss')
     plt.legend()

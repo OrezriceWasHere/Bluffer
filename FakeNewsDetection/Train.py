@@ -18,7 +18,7 @@ def train(model,
 
     # initialize running values
     running_loss = 0.0
-    valid_running_loss = 0.0
+    test_running_loss = 0.0
     global_step = 0
     train_loss_list = []
     test_loss_list = []
@@ -49,7 +49,7 @@ def train(model,
                 model.eval()
                 with torch.no_grad():
 
-                    # validation loop
+                    # test loop
                     # id,title,author,text,label
                     for (tweet_text_test, labels_test), _ in test_loader:
                         # labels_test = labels_test.type(torch.LongTensor)
@@ -58,22 +58,22 @@ def train(model,
                         labels_test = labels_test.unsqueeze(1)
                         result = model(tweet_text_test)
                         loss = criterion(result, labels_test)
-                        valid_running_loss += loss.item()
+                        test_running_loss += loss.item()
 
                 # evaluation
                 average_train_loss = running_loss / eval_every
-                average_test_loss = valid_running_loss / len(test_loader)
+                average_test_loss = test_running_loss / len(test_loader)
                 train_loss_list.append(average_train_loss)
                 test_loss_list.append(average_test_loss)
                 global_steps_list.append(global_step)
 
                 # resetting running values
                 running_loss = 0.0
-                valid_running_loss = 0.0
+                test_running_loss = 0.0
                 model.train()
 
                 # print progress
-                print('Epoch [{}/{}], Step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}'
+                print('Epoch [{}/{}], Step [{}/{}], Train Loss: {:.4f}, Test Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_loader),
                               average_train_loss, average_test_loss))
 
