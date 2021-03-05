@@ -35,7 +35,8 @@ datasets = [
 model = BERT()
 model = model.to(Parameters.DEVICE)
 optimizer = optim.Adam(model.parameters(), lr=Parameters.LR)
-for index, dataset in enumerate(datasets):
+for index in (0, 1, 3):
+    dataset = datasets[index]
     print('-------------------------------------')
     print(f'now working on dataset {index + 1}')
     train_iterator, test_iterator = DatasetPrepare.create_iterators(dataset["data_file"])
@@ -49,6 +50,12 @@ for index, dataset in enumerate(datasets):
         with open(metric_output_file, "w"):
             pass
 
+    if index > 0:
+        display_result(model=model,
+                       metric_file_location=metric_output_file,
+                       test_loader=test_iterator,
+                       title=f'Result Before training on dataset #{index + 1}')
+
     train(model=model,
           optimizer=optimizer,
           train_loader=train_iterator,
@@ -56,11 +63,11 @@ for index, dataset in enumerate(datasets):
           eval_every=len(train_iterator) // 2,
           model_output_file=model_output_file,
           metric_output_file=metric_output_file,
-          num_epochs=10)
+          num_epochs=20)
 
     display_result(model=model,
-                  metric_file_location=metric_output_file,
-                  test_loader=test_iterator,
-                  title=f'Result Dataset #{index + 1} and before')
+                   metric_file_location=metric_output_file,
+                   test_loader=test_iterator,
+                   title=f'Result Dataset #{index + 1} and before')
 
 print(f'now finished working on dataset {index + 1}')
