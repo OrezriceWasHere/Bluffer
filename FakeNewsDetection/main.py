@@ -8,11 +8,6 @@ import DatasetPrepare
 import torch.optim as optim
 
 
-# def train_model(model, optimizer):
-#     train(model=model, optimizer=optimizer, num_epochs=10, eval_every=len(train_iter) // 2)
-#     print("done")
-
-
 def display_result(model, metric_file_location, test_loader,  title=""):
     display_loss_graph(metric_file_location, title=title)
     evaluate(model, test_loader, title=title)
@@ -54,7 +49,6 @@ for index, dataset in enumerate(datasets):
         with open(metric_output_file, "w"):
             pass
 
-    # if index < len(datasets) - 1:
     train(model=model,
           optimizer=optimizer,
           train_loader=train_iterator,
@@ -63,22 +57,10 @@ for index, dataset in enumerate(datasets):
           model_output_file=model_output_file,
           metric_output_file=metric_output_file,
           num_epochs=10)
-    # else:
-    #     evaluate(model,
-    #              test_loader=train_iterator,
-    #              title="Evaluating TRAIN values of dataset 4 when running all over datasets 1 - 3")
-    evaluate(model,
-                 test_loader=test_iterator,
-                 title="Evaluating TEST values of dataset 4 when running all over datasets 1 - 3")
 
-    # display_result(model=model,
-        #                metric_file_location=metric_output_file,
-        #                test_loader=test_iterator,
-        #                title=f'Result Dataset #{index + 1} and before')
-        # display_result(model=model,
-        #                metric_file_location=metric_output_file,
-        #                test_loader=test_iterator,
-        #                title=f'Result Dataset #{index + 1} and before')
-
+    display_result(model=model,
+                  metric_file_location=metric_output_file,
+                  test_loader=test_iterator,
+                  title=f'Result Dataset #{index + 1} and before')
 
 print(f'now finished working on dataset {index + 1}')
