@@ -15,8 +15,8 @@ def display_result(model, metric_file_location, test_loader,  title=""):
     evaluate(model, test_loader, title=title)
 
 dataset = {
-    "data_file": join("Data", "Dataset5", "output.tsv"),
-    "output_dir": join("Data", "Dataset5", "output")
+    "data_file": join(Parameters.SOURCE_5_FOLDER, "output.tsv"),
+    "output_dir": join(Parameters.SOURCE_5_FOLDER, "output")
 }
 
 pre_trained_model_file = join(Parameters.SOURCE_4_FOLDER, "output", Parameters.MODEL_FILE_NAME)
