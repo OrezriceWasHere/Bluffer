@@ -19,5 +19,5 @@ class BERT(nn.Module):
         cls_hs = self.bert(text)[0]
         x = torch.sigmoid(cls_hs)
         x = self.fc(x)
-        x = torch.softmax(x, dim=2)
+        x = torch.softmax(x, dim=1)
         return x
