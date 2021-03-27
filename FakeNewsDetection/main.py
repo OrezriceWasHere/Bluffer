@@ -59,7 +59,7 @@ for index in datasets:
           eval_every=len(train_iterator) // 2,
           model_output_file=model_output_file,
           metric_output_file=metric_output_file,
-          num_epochs=20)
+          num_epochs=10)
 
     display_result(model=model,
                    metric_file_location=metric_output_file,
