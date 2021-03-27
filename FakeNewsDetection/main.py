@@ -39,18 +39,18 @@ for index, dataset in enumerate(datasets):
     Path(dataset["output_dir"]).mkdir(parents=True, exist_ok=True)
     model_output_file = join(dataset["output_dir"], "model.pt")
     metric_output_file = join(dataset["output_dir"], "metric.pt")
-    if not exists(model_output_file):
-        with open(model_output_file, "w"):
-            pass
-    if not exists(metric_output_file):
-        with open(metric_output_file, "w"):
-            pass
+    # if not exists(model_output_file):
+    #     with open(model_output_file, "w"):
+    #         pass
+    # if not exists(metric_output_file):
+    #     with open(metric_output_file, "w"):
+    #         pass
 
-    if index > 0:
-        display_result(model=model,
-                       metric_file_location=metric_output_file,
-                       test_loader=test_iterator,
-                       title=f'Result Before training on dataset #{index + 1}')
+    # if index > 0:
+    #     display_result(model=model,
+    #                    metric_file_location=metric_output_file,
+    #                    test_loader=test_iterator,
+    #                    title=f'Result Before training on dataset #{index + 1}')
 
     train(model=model,
           optimizer=optimizer,
@@ -61,9 +61,9 @@ for index, dataset in enumerate(datasets):
           metric_output_file=metric_output_file,
           num_epochs=10)
 
-    display_result(model=model,
-                   metric_file_location=metric_output_file,
-                   test_loader=test_iterator,
-                   title=f'Result Dataset #{index + 1} and before')
+    # display_result(model=model,
+    #                metric_file_location=metric_output_file,
+    #                test_loader=test_iterator,
+    #                title=f'Result Dataset #{index + 1} and before')
 
 print(f'now finished working on dataset {index + 1}')
