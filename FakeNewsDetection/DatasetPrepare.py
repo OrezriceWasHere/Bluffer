@@ -1,4 +1,5 @@
-from torchtext.data import Field, TabularDataset, BucketIterator, Iterator
+
+from torchtext.legacy.data import Field, TabularDataset, BucketIterator, Iterator
 from transformers import BertTokenizer
 import torch
 import Parameters
