@@ -9,7 +9,7 @@ import torch.optim as optim
 
 
 def display_result(model, metric_file_location, test_loader,  title=""):
-    display_loss_graph(metric_file_location, title=title)
+    # display_loss_graph(metric_file_location, title=title)
     evaluate(model, test_loader, title=title)
 
 
@@ -46,11 +46,11 @@ for index, dataset in enumerate(datasets):
     #     with open(metric_output_file, "w"):
     #         pass
 
-    # if index > 0:
-    #     display_result(model=model,
-    #                    metric_file_location=metric_output_file,
-    #                    test_loader=test_iterator,
-    #                    title=f'Result Before training on dataset #{index + 1}')
+    if index > 0:
+        display_result(model=model,
+                       metric_file_location=metric_output_file,
+                       test_loader=test_iterator,
+                       title=f'Result Before training on dataset #{index + 1}')
 
     train(model=model,
           optimizer=optimizer,
@@ -61,9 +61,9 @@ for index, dataset in enumerate(datasets):
           metric_output_file=metric_output_file,
           num_epochs=10)
 
-    # display_result(model=model,
-    #                metric_file_location=metric_output_file,
-    #                test_loader=test_iterator,
-    #                title=f'Result Dataset #{index + 1} and before')
+    display_result(model=model,
+                   metric_file_location=metric_output_file,
+                   test_loader=test_iterator,
+                   title=f'Result Dataset #{index + 1} and before')
 
 print(f'now finished working on dataset {index + 1}')
