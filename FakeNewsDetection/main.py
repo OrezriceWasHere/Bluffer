@@ -31,8 +31,8 @@ datasets = [
 model = BERT()
 model = model.to(Parameters.DEVICE)
 optimizer = optim.Adam(model.parameters(), lr=Parameters.LR)
-for index in datasets:
-    dataset = datasets[index]
+for index, dataset in enumerate(datasets):
+    # dataset = datasets[index]
     print('-------------------------------------')
     print(f'now working on dataset {index + 1}')
     train_iterator, test_iterator = DatasetPrepare.create_iterators(dataset["data_file"])
