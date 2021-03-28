@@ -9,7 +9,7 @@ import torch.optim as optim
 
 
 def display_result(model, metric_file_location, test_loader,  title=""):
-    # display_loss_graph(metric_file_location, title=title)
+    display_loss_graph(metric_file_location, title=title)
     evaluate(model, test_loader, title=title)
 
 
@@ -39,18 +39,17 @@ for index, dataset in enumerate(datasets):
     Path(dataset["output_dir"]).mkdir(parents=True, exist_ok=True)
     model_output_file = join(dataset["output_dir"], "model.pt")
     metric_output_file = join(dataset["output_dir"], "metric.pt")
-    # if not exists(model_output_file):
-    #     with open(model_output_file, "w"):
-    #         pass
-    # if not exists(metric_output_file):
-    #     with open(metric_output_file, "w"):
-    #         pass
+    if not exists(model_output_file):
+        with open(model_output_file, "w"):
+            pass
+    if not exists(metric_output_file):
+        with open(metric_output_file, "w"):
+            pass
 
     if index > 0:
-        display_result(model=model,
-                       metric_file_location=metric_output_file,
-                       test_loader=test_iterator,
-                       title=f'Result Before training on dataset #{index + 1}')
+        evaluate(model=model,
+                 test_loader=test_iterator,
+                 title=f'Result Before training on dataset #{index + 1}')
 
     train(model=model,
           optimizer=optimizer,
