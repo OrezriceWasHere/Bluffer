@@ -18,11 +18,11 @@ def display_loss_graph(metric_file_location, title=""):
     plt.legend()
     if len(title) > 0:
         plt.title(title)
-    plt.savefig(metric_file_location.replace(".pt", ".png"))
+    plt.savefig(metric_file_location.replace(".pt", ".lossgraph.png"))
     plt.show()
 
 
-def evaluate(model, test_loader, title="", criterion=nn.BCELoss()):
+def evaluate(model, test_loader, title=""):
     y_pred = []
     y_true = []
 
