@@ -18,7 +18,9 @@ def display_loss_graph(metric_file_location, title=""):
     plt.legend()
     if len(title) > 0:
         plt.title(title)
-    plt.savefig(metric_file_location.replace(".pt", ".lossgraph.png"))
+    plt.savefig(
+        metric_file_location.replace(
+            Parameters.MODEL_FILE_EXTENSION, Parameters.LOSS_GRAPH_EXTENSION))
     plt.show()
 
 
