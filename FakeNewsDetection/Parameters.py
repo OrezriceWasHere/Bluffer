@@ -9,10 +9,10 @@ SOURCE_2_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset2")
 SOURCE_3_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset3")
 SOURCE_4_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset4")
 SOURCE_5_FOLDER = os.path.join(SOURCE_FOLDER, "Dataset5")
-OUTPUT_1_FOLDER = os.path.join(SOURCE_1_FOLDER, "Output")
-OUTPUT_2_FOLDER = os.path.join(SOURCE_2_FOLDER, "Output")
-OUTPUT_3_FOLDER = os.path.join(SOURCE_3_FOLDER, "Output")
-OUTPUT_4_FOLDER = os.path.join(SOURCE_4_FOLDER, "Output")
+OUTPUT_1_FOLDER = os.path.join(SOURCE_1_FOLDER, "output")
+OUTPUT_2_FOLDER = os.path.join(SOURCE_2_FOLDER, "output")
+OUTPUT_3_FOLDER = os.path.join(SOURCE_3_FOLDER, "output")
+OUTPUT_4_FOLDER = os.path.join(SOURCE_4_FOLDER, "output")
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
 SUBMIT_FILE_NAME = "submit.csv"
@@ -31,7 +31,7 @@ Path(OUTPUT_FOLDER).mkdir(parents=True, exist_ok=True)
 
 # Model Parameters:
 BERT_TOKENIZER_NAME = "bert-base-uncased"
-BATCH_SIZE = 64
+BATCH_SIZE = 8
 THRESHOLD = 0
 LR = 1e-3
 
