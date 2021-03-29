@@ -19,6 +19,7 @@ def calculate_stddev(float_list):
 
 model_location = join(Parameters.OUTPUT_4_FOLDER, Parameters.MODEL_FILE_NAME)
 model = BERT()
+model = model.to(Parameters.DEVICE)
 SaveLoad.load_checkpoint(model_location, model)
 dataset = {
     "data_file": join(Parameters.SOURCE_4_FOLDER, "output.tsv"),
