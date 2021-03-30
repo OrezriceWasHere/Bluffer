@@ -30,15 +30,27 @@ results = {
     "train": {
         "iterator": train_iterator,
         "probabilities": {
-            "0": list(),
-            "1": list()
+            "true_prediction": {
+                "0": list(),
+                "1": list()
+            },
+            "false_prediction": {
+                "0": list(),
+                "1": list()
+            }
         }
     },
     "test": {
         "iterator": test_iterator,
         "probabilities": {
-            "0": list(),
-            "1": list()
+            "true_prediction": {
+                "0": list(),
+                "1": list()
+            },
+            "false_prediction": {
+                "0": list(),
+                "1": list()
+            }
         }
     }
 }
@@ -53,13 +65,20 @@ with torch.no_grad():
             (title_text, labels), _ = line
             labels = labels.to(Parameters.DEVICE)
             title_text = title_text.to(Parameters.DEVICE)
-            result = model(title_text)
-            for index, prob_prediction in enumerate(result):
-                class_prediction = torch.argmax(prob_prediction, 0)
-                class_prediction_int = class_prediction.item()
-                prob = prob_prediction[class_prediction_int]
-                prob_list = prob_dict[str(class_prediction.item())]
-                prob_list.append(prob)
+            model_predictions = model(title_text)
+            for index, combo in enumerate(zip(model_predictions, labels)):
+                prob_prediction, class_prediction = torch.max(combo[0], 0)
+                real_prediction = combo[1]
+                if class_prediction == real_prediction:
+                    prob_dict["true_prediction"][str(class_prediction.item())].append(prob_prediction)
+                else:
+                    prob_dict["false_prediction"][str(class_prediction.item())].append(prob_prediction)
+
+                # class_prediction = torch.argmax(prob_prediction, 0).item()
+                # prob = prob_prediction[class_prediction].item()
+                # prob_list = prob_dict[str(class_prediction)]
+                # prob_list.append(prob)
+
 
 for data_type, classes in results.items():
     print('{stars}\t result for dataset {dataType} \t {stars}'.format(stars=stars, dataType=data_type))
@@ -69,6 +88,7 @@ for data_type, classes in results.items():
         print(f'\t min: {min(class_probabilities)}')
         print(f'\t max: {max(class_probabilities)}')
         print(f'\t stddev: {calculate_stddev(class_probabilities)}')
+        print(f'\t count items: {len(class_probabilities)}')
         print("\n")
 
 print("done")
