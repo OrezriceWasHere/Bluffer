@@ -31,7 +31,7 @@ Path(OUTPUT_FOLDER).mkdir(parents=True, exist_ok=True)
 
 # Model Parameters:
 BERT_TOKENIZER_NAME = "bert-base-uncased"
-BATCH_SIZE = 64
+BATCH_SIZE = 64 if torch.cuda.is_available() else 4
 THRESHOLD = 0
 LR = 1e-3
 
