@@ -25,25 +25,31 @@ dataset = {
     "data_file": join(Parameters.SOURCE_4_FOLDER, "output.tsv"),
     "output_dir": join(Parameters.SOURCE_4_FOLDER, "output")
 }
+train_iterator, test_iterator = DatasetPrepare.create_iterators(dataset["data_file"])
 results = {
     "train": {
-        "0": list(),
-        "1": list()
+        "iterator": train_iterator,
+        "probabilities": {
+            "0": list(),
+            "1": list()
+        }
     },
     "test": {
-        "0": list(),
-        "1": list()
+        "iterator": test_iterator,
+        "probabilities": {
+            "0": list(),
+            "1": list()
+        }
     }
 }
-train_iterator, test_iterator = DatasetPrepare.create_iterators(dataset["data_file"])
-
 
 stars = "*" * 15
 model.eval()
 with torch.no_grad():
-    for data_type, prob_dict in results.items():
+    for data_type, data_type_dict in results.items():
         print('{stars}\t working on {dataType} data \t {stars}'.format(stars=stars, dataType=data_type))
-        for line in train_iterator:
+        for line in data_type_dict["iterator"]:
+            prob_dict = data_type_dict["probabilities"]
             (title_text, labels), _ = line
             labels = labels.to(Parameters.DEVICE)
             title_text = title_text.to(Parameters.DEVICE)
@@ -57,7 +63,7 @@ with torch.no_grad():
 
 for data_type, classes in results.items():
     print('{stars}\t result for dataset {dataType} \t {stars}'.format(stars=stars, dataType=data_type))
-    for class_name, class_probabilities in classes.items():
+    for class_name, class_probabilities in classes["probabilities"].items():
         print('result for class {class_name}:'.format(class_name=class_name))
         print(f'\t avg: {calculate_avg(class_probabilities)}')
         print(f'\t min: {min(class_probabilities)}')
