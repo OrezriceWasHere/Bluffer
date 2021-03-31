@@ -82,13 +82,14 @@ with torch.no_grad():
 
 for data_type, classes in results.items():
     print('{stars}\t result for dataset {dataType} \t {stars}'.format(stars=stars, dataType=data_type))
-    for class_name, class_probabilities in classes["probabilities"].items():
-        print('result for class {class_name}:'.format(class_name=class_name))
-        print(f'\t avg: {calculate_avg(class_probabilities)}')
-        print(f'\t min: {min(class_probabilities)}')
-        print(f'\t max: {max(class_probabilities)}')
-        print(f'\t stddev: {calculate_stddev(class_probabilities)}')
-        print(f'\t count items: {len(class_probabilities)}')
-        print("\n")
+    for prediction_result, prob_prediction in classes["probabilities"].items():
+        for class_name, class_probabilities in prob_prediction.items():
+            print('result for class {success}, {class_name}:'.format(success=prediction_result,class_name=class_name))
+            print(f'\t avg: {calculate_avg(class_probabilities)}')
+            print(f'\t min: {min(class_probabilities)}')
+            print(f'\t max: {max(class_probabilities)}')
+            print(f'\t stddev: {calculate_stddev(class_probabilities)}')
+            print(f'\t count items: {len(class_probabilities)}')
+            print("\n")
 
 print("done")

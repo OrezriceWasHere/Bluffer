@@ -51,27 +51,39 @@ fields = [('title', text_field), ('label', long_field)]
 #                             shuffle=True)
 
 
-def create_iterators(data_file_location):
-    train, test = TabularDataset(path=data_file_location,
+def create_iterators(data_file_location, split_to_train_and_test=True):
+
+    if split_to_train_and_test:
+
+        train, test = TabularDataset(path=data_file_location,
+                                     format="TSV",
+                                     fields=fields,
+                                     skip_header=True).split()
+
+        train_iter = BucketIterator(train,
+                                    batch_size=Parameters.BATCH_SIZE,
+                                    device=Parameters.DEVICE,
+                                    train=True,
+                                    shuffle=True)
+
+        test_iter = BucketIterator(test,
+                                   batch_size=Parameters.BATCH_SIZE,
+                                   device=Parameters.DEVICE,
+                                   train=True,
+                                   shuffle=True,
+                                   sort=False)
+        answer = train_iter, test_iter
+    else:
+        dataset = TabularDataset(path=data_file_location,
                                  format="TSV",
                                  fields=fields,
-                                 skip_header=True).split()
+                                 skip_header=True)
+        answer = BucketIterator(dataset,
+                                    batch_size=Parameters.BATCH_SIZE,
+                                    device=Parameters.DEVICE,
+                                    train=True,
+                                    shuffle=True,
+                                    sort=False)
 
-    train_iter = BucketIterator(train,
-                                batch_size=Parameters.BATCH_SIZE,
-                                device=Parameters.DEVICE,
-                                train=True,
-                                shuffle=True)
-
-    test_iter = BucketIterator(test,
-                               batch_size=Parameters.BATCH_SIZE,
-                               device=Parameters.DEVICE,
-                               train=True,
-                               shuffle=True,
-                               sort=False)
     print("Finish dataset prepare")
-
-    return train_iter, test_iter
-
-
-
+    return answer
