@@ -29,4 +29,9 @@ import seaborn as sns
 
 from pathlib import Path
 
+# server
+
+from flask import Flask, request, jsonify, json
+
+
 print("all dependencies installed")

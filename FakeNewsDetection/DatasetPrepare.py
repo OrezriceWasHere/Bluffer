@@ -1,7 +1,8 @@
-
 from torchtext.legacy.data import Field, TabularDataset, BucketIterator, Iterator
 from transformers import BertTokenizer
 import torch
+from transformers.tokenization_utils_base import PaddingStrategy
+
 import Parameters
 
 # Use BERT tokenizer (the method to use words the same way they are used in BERT model)
@@ -87,3 +88,13 @@ def create_iterators(data_file_location, split_to_train_and_test=True):
 
     print("Finish dataset prepare")
     return answer
+
+
+def encode_bert(human_text):
+    encoding = tokenizer._batch_encode_plus(human_text,
+                                     add_special_tokens=True,
+                                     truncation=True,
+                                     padding_strategy=PaddingStrategy.LONGEST,
+                                     return_attention_mask=True,
+                                     return_tensors="pt")
+    return encoding.data["input_ids"]
